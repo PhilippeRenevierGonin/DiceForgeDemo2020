@@ -1,9 +1,19 @@
 package diceforge;
 
+import diceforge.joueur.Joueur;
+import diceforge.moteur.GestionnaireDeTour;
+
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 
 public class UnePartie {
+
+    public UnePartie() {
+        System.out.println("début de la partie");
+
+
+        moteur.jouer();
+    }
 
     public static final void main(String [] args) {
         try {
@@ -12,6 +22,7 @@ public class UnePartie {
             e.printStackTrace();
         }
 
-        System.out.println("début de la partie");
+        new UnePartie();
+
     }
 }
