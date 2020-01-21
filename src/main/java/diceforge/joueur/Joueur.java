@@ -24,5 +24,7 @@ public class Joueur {
         return nom;
     }
 
-
+    public void joue() {
+        moteur.lanceMesDés();
+    }
 }
