@@ -11,6 +11,9 @@ public class UnePartie {
     public UnePartie() {
         System.out.println("début de la partie");
 
+        Joueur j = new Joueur("premier joueur");
+        GestionnaireDeTour moteur = new GestionnaireDeTour();
+        moteur.ajouterJoueur(j);
 
         moteur.jouer();
     }
