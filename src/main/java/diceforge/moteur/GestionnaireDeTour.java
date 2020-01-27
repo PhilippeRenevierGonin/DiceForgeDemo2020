@@ -2,9 +2,16 @@ package diceforge.moteur;
 
 import diceforge.joueur.Joueur;
 
+import java.util.Random;
+
 public class GestionnaireDeTour {
     private Joueur joueur;
     private Inventaire inventaire;
+    private Random rand;
+
+    public GestionnaireDeTour(Random rand) {
+        this.rand = rand;
+    }
 
 
     public void jouer() {
@@ -26,7 +33,7 @@ public class GestionnaireDeTour {
     public void ajouterJoueur(Joueur j) {
         this.joueur = j;
         this.joueur.setMoteur(this);
-        this.inventaire = new Inventaire();
+        this.inventaire = new Inventaire(this.rand);
     }
 
     public void lanceMesDés() {

@@ -5,6 +5,7 @@ import diceforge.moteur.GestionnaireDeTour;
 
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Random;
 
 public class UnePartie {
 
@@ -12,7 +13,7 @@ public class UnePartie {
         System.out.println("début de la partie");
 
         Joueur j = new Joueur("premier joueur");
-        GestionnaireDeTour moteur = new GestionnaireDeTour();
+        GestionnaireDeTour moteur = new GestionnaireDeTour(new Random());
         moteur.ajouterJoueur(j);
 
         moteur.jouer();
