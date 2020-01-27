@@ -10,6 +10,8 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
+import java.util.Random;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -23,7 +25,7 @@ class GestionnaireDeTourTest {
 
     @BeforeEach
     void setUp() {
-        moteur = new GestionnaireDeTour();
+        moteur = new GestionnaireDeTour(new Random());
         moteur = spy(moteur);
     }
 
