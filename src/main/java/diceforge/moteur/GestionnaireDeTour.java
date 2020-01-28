@@ -1,13 +1,16 @@
 package diceforge.moteur;
 
+import diceforge.joueur.Identité;
 import diceforge.joueur.Joueur;
+import diceforge.serveur.Serveur;
 
 import java.util.Random;
 
 public class GestionnaireDeTour {
-    private Joueur joueur;
+    private Identité joueur;
     private Inventaire inventaire;
     private Random rand;
+    private Serveur serveur;
 
     public GestionnaireDeTour(Random rand) {
         this.rand = rand;
@@ -16,10 +19,9 @@ public class GestionnaireDeTour {
 
     public void jouer() {
         if ((joueur != null) && (inventaire != null)) {
-            joueur.joue();
+            serveur.transfereDemandeDeJouer();
         }
-        afficherScore();
-        déterminerGagnant();
+
     }
 
     private void déterminerGagnant() {
@@ -30,9 +32,8 @@ public class GestionnaireDeTour {
         System.out.println(joueur.getNom() +" a "+inventaire.getPoints()+" points ");
     }
 
-    public void ajouterJoueur(Joueur j) {
-        this.joueur = j;
-        this.joueur.setMoteur(this);
+    public void ajouterJoueur(Identité joueurIdentité) {
+        this.joueur = joueurIdentité;
         this.inventaire = new Inventaire(this.rand);
     }
 
@@ -43,6 +44,18 @@ public class GestionnaireDeTour {
         int points = inventaire.lancerDés();
         inventaire.ajouterPoints(points);
         System.out.println(joueur.getNom()+" lance les dés et obtient "+points+" points");
+
+        // déplacer ici car asynchrone
+        afficherScore();
+        déterminerGagnant();
+    }
+
+    public void setServeur(Serveur serveur) {
+        this.serveur = serveur;
+    }
+
+    public Serveur getServeur() {
+        return serveur;
     }
 }
 

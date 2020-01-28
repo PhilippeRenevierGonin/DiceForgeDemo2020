@@ -1,30 +1,37 @@
 package diceforge.joueur;
 
+import diceforge.client.Client;
 import diceforge.moteur.GestionnaireDeTour;
 
 public class Joueur {
 
-    private String nom;
 
-    public void setMoteur(GestionnaireDeTour moteur) {
-        this.moteur = moteur;
-    }
+    private Identité identité;
+    private Client client;
 
-    private GestionnaireDeTour moteur;
 
     public Joueur(String nom) {
-        setNom(nom);
+        setIdentité(new Identité(nom));
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public String getNom() {
-        return nom;
-    }
 
     public void joue() {
-        moteur.lanceMesDés();
+        client.transfereMessage("jouer");
+    }
+
+    public void setIdentité(Identité identité) {
+        this.identité = identité;
+    }
+
+    public Identité getIdentité() {
+        return identité;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Client getClient() {
+        return client;
     }
 }

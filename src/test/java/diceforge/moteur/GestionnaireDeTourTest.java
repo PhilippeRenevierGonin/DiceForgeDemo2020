@@ -1,6 +1,8 @@
 package diceforge.moteur;
 
+import diceforge.joueur.Identité;
 import diceforge.joueur.Joueur;
+import diceforge.serveur.Serveur;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -19,13 +21,14 @@ import static org.mockito.Mockito.*;
 class GestionnaireDeTourTest {
 
     @Mock
-    Joueur j;
+    Serveur s;
 
     GestionnaireDeTour moteur;
 
     @BeforeEach
     void setUp() {
         moteur = new GestionnaireDeTour(new Random());
+        moteur.setServeur(s);
         moteur = spy(moteur);
     }
 
@@ -34,7 +37,7 @@ class GestionnaireDeTourTest {
     void jouer() {
         ajouterJoueur();
         moteur.jouer();
-                verify(j,times(1)).joue();
+                verify(s,times(1)).transfereDemandeDeJouer();
     }
 
 
@@ -47,18 +50,17 @@ class GestionnaireDeTourTest {
                 moteur.lanceMesDés();
                 return null;
             }
-        }).when(j).joue();
+        }).when(s).transfereDemandeDeJouer();
 
         ajouterJoueur();
         moteur.jouer();
-        verify(j,times(1)).joue();
+        verify(s,times(1)).transfereDemandeDeJouer();
         verify(moteur,times(1)).lanceMesDés();
     }
 
-    @Test
+
     void ajouterJoueur() {
-        moteur.ajouterJoueur(j);
-        verify(j,times(1)).setMoteur(moteur);
+        moteur.ajouterJoueur(new Identité("joueur test"));
     }
 
     @Test
