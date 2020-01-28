@@ -36,6 +36,9 @@ public class GestionnaireDeTour {
         this.inventaire = new Inventaire(this.rand);
     }
 
+    /**
+     * lance les dés pour le joueur, comptabilise ses points ainsi gagné et les affiche
+     */
     public void lanceMesDés() {
         int points = inventaire.lancerDés();
         inventaire.ajouterPoints(points);

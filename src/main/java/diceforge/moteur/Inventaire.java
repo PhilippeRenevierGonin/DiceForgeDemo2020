@@ -19,10 +19,18 @@ public class Inventaire {
     }
 
 
+    /**
+     * lance le dé associé à cet inventaire
+     * @return le nombre de points gangés
+     */
     public int lancerDés() {
         return dé.lancer();
     }
 
+    /**
+     * permet de cumuler les points gagnés ou perdus
+     * @param points le nombre de points à ajouter (>0) ou à retrancher (<0)
+     */
     public void ajouterPoints(int points) {
         this.points += points;
     }
