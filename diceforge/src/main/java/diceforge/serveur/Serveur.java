@@ -13,6 +13,8 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Random;
 
+import static diceforge.echange.Protocole.*;
+
 public class Serveur implements /* ConnectListener, */ DataListener<String> {
 
 
@@ -29,14 +31,14 @@ public class Serveur implements /* ConnectListener, */ DataListener<String> {
         // changement de protocole, la connexion est reportée à un message "identification"
         // server.addConnectListener(this);
 
-        server.addEventListener("identification", Identité.class, new DataListener<Identité>() {
+        server.addEventListener(IDENTIFICATION, Identité.class, new DataListener<Identité>() {
             @Override
             public void onData(SocketIOClient socketIOClient, Identité nom, AckRequest ackRequest) throws Exception {
                 receptionNouveauJoueur(socketIOClient, nom);
             }
         });
 
-        server.addEventListener("jouer", String.class, this);
+        server.addEventListener(DEMANDER_AU_SERVEUR_DE_LANCER_LES_DÉS, String.class, this);
 
 
         server.start(); // démarre un thread… le programme ne s’arrêtera pas tant que le serveur n’est pas terminé
@@ -82,7 +84,7 @@ public class Serveur implements /* ConnectListener, */ DataListener<String> {
     }
     */
     public void transfereDemandeDeJouer() {
-        monClient.sendEvent("àToiDeJoeur");
+        monClient.sendEvent(DEMANDER_AU_JOUEUR_DE_JOUER);
     }
 
     @Override

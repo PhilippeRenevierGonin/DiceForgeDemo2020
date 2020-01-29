@@ -11,6 +11,8 @@ import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 
+import static diceforge.echange.Protocole.DEMANDER_AU_JOUEUR_DE_JOUER;
+
 public class Client implements Emitter.Listener {
 
     private final Socket mSocket;
@@ -19,7 +21,7 @@ public class Client implements Emitter.Listener {
     public Client(Socket mSocket, Joueur joueur) {
         this.mSocket = mSocket;
         this.joueur = joueur;
-        mSocket.on("àToiDeJoeur", this);
+        mSocket.on(DEMANDER_AU_JOUEUR_DE_JOUER, this);
 
 
     }

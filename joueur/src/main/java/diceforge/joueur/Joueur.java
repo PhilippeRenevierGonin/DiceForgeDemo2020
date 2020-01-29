@@ -2,6 +2,9 @@ package diceforge.joueur;
 
 import diceforge.client.Client;
 
+import static diceforge.echange.Protocole.DEMANDER_AU_SERVEUR_DE_LANCER_LES_DÉS;
+import static diceforge.echange.Protocole.IDENTIFICATION;
+
 public class Joueur {
 
 
@@ -15,7 +18,7 @@ public class Joueur {
 
 
     public void joue() {
-        client.transfereMessage("jouer");
+        client.transfereMessage(DEMANDER_AU_SERVEUR_DE_LANCER_LES_DÉS);
     }
 
     public void setIdentité(Identité identité) {
@@ -29,7 +32,7 @@ public class Joueur {
     public void setClient(Client client) {
         this.client = client;
         this.client.connnexion();
-        this.client.transfereMessage("identification", getIdentité());
+        this.client.transfereMessage(IDENTIFICATION, getIdentité());
     }
 
     public Client getClient() {

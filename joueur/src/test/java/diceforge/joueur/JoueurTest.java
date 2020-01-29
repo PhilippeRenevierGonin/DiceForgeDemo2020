@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static diceforge.echange.Protocole.DEMANDER_AU_SERVEUR_DE_LANCER_LES_DÉS;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -26,6 +27,6 @@ class JoueurTest {
     @Test
     void joue() {
         j.joue();
-        verify(connexionVersMoteur, times(1)).transfereMessage("jouer");
+        verify(connexionVersMoteur, times(1)).transfereMessage(DEMANDER_AU_SERVEUR_DE_LANCER_LES_DÉS);
     }
 }
