@@ -1,7 +1,15 @@
 package diceforge.joueur;
 
-public class Identité {
+import diceforge.echange.ToJSON;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class Identité implements ToJSON {
     private String nom;
+
+    public Identité() {
+        this("sans nom");
+    }
 
     public Identité(String nom) {
         setNom(nom);
@@ -15,4 +23,14 @@ public class Identité {
         return nom;
     }
 
+    @Override
+    public JSONObject toJSON() {
+        JSONObject obj =  new JSONObject();
+        try {
+            obj.put("nom", getNom());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return obj;
+    }
 }

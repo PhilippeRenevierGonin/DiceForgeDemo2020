@@ -13,7 +13,7 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Random;
 
-public class Serveur implements ConnectListener, DataListener<String> {
+public class Serveur implements /* ConnectListener, */ DataListener<String> {
 
 
     private final GestionnaireDeTour moteur;
@@ -26,13 +26,28 @@ public class Serveur implements ConnectListener, DataListener<String> {
         // creation du serveur
         SocketIOServer server = new SocketIOServer(config);
 
-        server.addConnectListener(this);
+        // changement de protocole, la connexion est reportée à un message "identification"
+        // server.addConnectListener(this);
+
+        server.addEventListener("identification", Identité.class, new DataListener<Identité>() {
+            @Override
+            public void onData(SocketIOClient socketIOClient, Identité nom, AckRequest ackRequest) throws Exception {
+                receptionNouveauJoueur(socketIOClient, nom);
+            }
+        });
 
         server.addEventListener("jouer", String.class, this);
 
 
         server.start(); // démarre un thread… le programme ne s’arrêtera pas tant que le serveur n’est pas terminé
 
+    }
+
+    protected void receptionNouveauJoueur(SocketIOClient socketIOClient, Identité id) {
+        monClient = socketIOClient;
+        // System.out.println(monClient.getRemoteAddress());
+        moteur.ajouterJoueur(id); //@todo, recevoir le nom
+        moteur.jouer();
     }
 
 
@@ -56,13 +71,16 @@ public class Serveur implements ConnectListener, DataListener<String> {
         moteur.setServeur(serveur);
     }
 
+    /*
+    // changement de protocole, la connexion est reportée à un message "identification"
     @Override
     public void onConnect(SocketIOClient socketIOClient) {
         monClient = socketIOClient;
+        // System.out.println(monClient.getRemoteAddress());
         moteur.ajouterJoueur(new Identité("nomTemp")); //@todo, recevoir le nom
         moteur.jouer();
     }
-
+    */
     public void transfereDemandeDeJouer() {
         monClient.sendEvent("àToiDeJoeur");
     }

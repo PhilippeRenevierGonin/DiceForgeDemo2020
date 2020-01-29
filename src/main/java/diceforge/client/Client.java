@@ -1,9 +1,13 @@
 package diceforge.client;
 
+import diceforge.echange.ToJSON;
+import diceforge.joueur.Identité;
 import diceforge.joueur.Joueur;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 
@@ -37,7 +41,8 @@ public class Client implements Emitter.Listener {
 
         j.setClient(c);
 
-        c.connnexion();
+        // changement de protocole, la connexion est reportée à un message "identification"
+        // c.connnexion();
     }
 
     @Override
@@ -45,7 +50,24 @@ public class Client implements Emitter.Listener {
         joueur.joue();
     }
 
-    public void transfereMessage(String lancerDé) {
-        mSocket.emit(lancerDé);
+    /**
+     * méthode générique d'envoi de message (sans json) au serveur
+     * @param msg le message (à connaitre par la classe utilisatrice) à envoyer
+     */
+    public void transfereMessage(String msg) {
+        mSocket.emit(msg);
     }
+
+    public void transfereMessage(String msg, ToJSON obj) {
+        mSocket.emit(msg, obj.toJSON());
+    }
+
+    /*
+    alternative à transfereMessage : dans ce cas, la classe utilisatrice ne connait pas le protocole d'échange
+    entre le client et le serveur
+    public void demanderÀLancerLesDé() {
+        mSocket.emit("jouer");
+    }
+     */
+
 }

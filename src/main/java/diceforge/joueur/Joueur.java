@@ -29,6 +29,8 @@ public class Joueur {
 
     public void setClient(Client client) {
         this.client = client;
+        this.client.connnexion();
+        this.client.transfereMessage("identification", getIdentité());
     }
 
     public Client getClient() {
