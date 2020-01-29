@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>PhilippeRG</groupId> <!-- à changer par le nom du groupe -->
+		<artifactId>DiceForge</artifactId> <!-- et le nom du projet -->
+		<version>1.0</version>
+	</parent>
+	
+	<artifactId>commun</artifactId> <!-- et le nom du projet -->
+	<version>1.0</version>
+
+
+    <build>
+        <sourceDirectory>src/main/java</sourceDirectory>  <!-- éventuellement à changer : localisation des fichiers sources -->
+		<!--
+        <testSourceDirectory>src/test/java</testSourceDirectory>  -->
+        <plugins>
+
+
+           
+        </plugins>
+    </build>
+
+
+    <dependencies>
+
+
+        <!-- JSON -->
+        <dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20190722</version>
+		</dependency>
+
+
+
+
+    </dependencies>
+
+</project>

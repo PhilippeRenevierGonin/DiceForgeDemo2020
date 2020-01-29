@@ -1,7 +1,6 @@
 package diceforge.moteur;
 
 import diceforge.joueur.Identité;
-import diceforge.joueur.Joueur;
 import diceforge.serveur.Serveur;
 
 import java.util.Random;

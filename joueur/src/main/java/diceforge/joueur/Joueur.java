@@ -1,7 +1,6 @@
 package diceforge.joueur;
 
 import diceforge.client.Client;
-import diceforge.moteur.GestionnaireDeTour;
 
 public class Joueur {
 

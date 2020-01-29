@@ -1,7 +1,6 @@
 package diceforge.moteur;
 
 import diceforge.joueur.Identité;
-import diceforge.joueur.Joueur;
 import diceforge.serveur.Serveur;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
