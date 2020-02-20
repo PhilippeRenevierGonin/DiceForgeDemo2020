@@ -20,13 +20,14 @@ public class Serveur implements /* ConnectListener, */ DataListener<String> {
 
     private final GestionnaireDeTour moteur;
     private SocketIOClient monClient;
+    SocketIOServer server;
 
     public Serveur(Configuration config, GestionnaireDeTour moteur) {
         // le moteur
         this.moteur = moteur;
 
         // creation du serveur
-        SocketIOServer server = new SocketIOServer(config);
+        server = new SocketIOServer(config);
 
         // changement de protocole, la connexion est reportée à un message "identification"
         // server.addConnectListener(this);
@@ -90,5 +91,18 @@ public class Serveur implements /* ConnectListener, */ DataListener<String> {
     @Override
     public void onData(SocketIOClient socketIOClient, String s, AckRequest ackRequest) throws Exception {
         moteur.lanceMesDés();
+    }
+
+    public void terminer() {
+        monClient.disconnect();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                server.stop(); // à faire sur un autre thread que sur le thread de SocketIO
+                System.out.println("fin du serveur - fin");
+
+            }
+        }).start();
+
     }
 }

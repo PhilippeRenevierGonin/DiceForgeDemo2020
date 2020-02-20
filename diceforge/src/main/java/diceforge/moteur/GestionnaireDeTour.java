@@ -47,7 +47,12 @@ public class GestionnaireDeTour {
         // déplacer ici car asynchrone
         afficherScore();
         déterminerGagnant();
+
+        // à faire que si on veut arrêter le serveur après une partie
+        // à ne pas faire si on veut lancer 500 parties
+        serveur.terminer();
     }
+
 
     public void setServeur(Serveur serveur) {
         this.serveur = serveur;

@@ -22,6 +22,9 @@ public class Client implements Emitter.Listener {
         this.mSocket = mSocket;
         this.joueur = joueur;
         mSocket.on(DEMANDER_AU_JOUEUR_DE_JOUER, this);
+        mSocket.on("disconnect", (objects) -> {
+            terminer();
+        });
 
 
     }
@@ -71,5 +74,26 @@ public class Client implements Emitter.Listener {
         mSocket.emit("jouer");
     }
      */
+
+
+    public void terminer() {
+
+        // pour ne pas être sur le thread de SocketIO
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                mSocket.off("disconnect");
+                mSocket.close();
+                System.out.println("@todo >>>> c'est fini");
+                // hack pour arrêter plus vite (sinon attente de plusieurs secondes
+                // à ne pas faire si on veut lancer 500 parties
+                System.exit(0);
+            }
+        }).start() ;
+
+
+
+    }
 
 }
