@@ -19,6 +19,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class GestionnaireDeTourTest {
 
+
     @Mock
     Serveur s;
 
@@ -34,35 +35,53 @@ class GestionnaireDeTourTest {
 
     @Test
     void jouer() {
-        ajouterJoueur();
-        moteur.jouer();
-                verify(s,times(1)).transfereDemandeDeJouer();
+        ajouterJoueur("premier");
+        verify(s,times(0)).transfereDemandeDeJouer(any());
+        ajouterJoueur("second");
+        verify(s,times(2)).transfereDemandeDeJouer(any());
+
+
     }
 
 
 
     @Test
     void jouerAvecJoeurQuiAppelleLeMoteur() {
+        Identité id1 = new Identité("toto");
+        Identité id2 = new Identité("tutu");
+
         doAnswer(new Answer() {
             @Override
             public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
-                moteur.lanceMesDés();
+                moteur.lanceMesDés(0);
                 return null;
             }
-        }).when(s).transfereDemandeDeJouer();
+        }).when(s).transfereDemandeDeJouer(id1);
 
-        ajouterJoueur();
-        moteur.jouer();
-        verify(s,times(1)).transfereDemandeDeJouer();
-        verify(moteur,times(1)).lanceMesDés();
+        doAnswer(new Answer() {
+            @Override
+            public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
+                moteur.lanceMesDés(1);
+                return null;
+            }
+        }).when(s).transfereDemandeDeJouer(id2);
+
+        ajouterJoueur("toto");
+        ajouterJoueur("tutu");
+        verify(s,times(1)).transfereDemandeDeJouer(id1);
+        verify(s,times(1)).transfereDemandeDeJouer(id2);
+        verify(moteur,times(1)).lanceMesDés(0);
+        verify(moteur,times(1)).lanceMesDés(1);
     }
 
 
-    void ajouterJoueur() {
-        moteur.ajouterJoueur(new Identité("joueur test"));
+    void ajouterJoueur(String name) {
+        moteur.ajouterJoueur(new Identité(name));
     }
 
     @Test
     void lanceMesDés() {
     }
+
+
 }

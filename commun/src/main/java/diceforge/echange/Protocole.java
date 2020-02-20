@@ -7,4 +7,8 @@ public class Protocole {
 
     public static final String  DEMANDER_AU_JOUEUR_DE_JOUER = "àToiDeJouer";
 
+
+
+    public static final int  NB_JOUEURS = 2;
+
 }

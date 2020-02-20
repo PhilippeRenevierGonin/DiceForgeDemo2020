@@ -4,6 +4,8 @@ import diceforge.echange.ToJSON;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.awt.font.ImageGraphicAttribute;
+
 public class Identité implements ToJSON {
     private String nom;
 
@@ -22,6 +24,25 @@ public class Identité implements ToJSON {
     public String getNom() {
         return nom;
     }
+
+
+    public String toString() {
+        return getNom();
+    }
+
+
+
+    @Override
+    public boolean equals(Object o) {
+        boolean result = false;
+        if (o instanceof Identité) {
+            Identité id = (Identité) o;
+            result = id.getNom().equals(getNom());
+        }
+
+        return result; // bug ; return false;
+    }
+
 
     @Override
     public JSONObject toJSON() {

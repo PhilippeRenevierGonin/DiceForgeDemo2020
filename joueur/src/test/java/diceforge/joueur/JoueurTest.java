@@ -13,6 +13,8 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class JoueurTest {
+
+    // @TODO TEST
     @Mock
     Client connexionVersMoteur;
 
@@ -27,6 +29,7 @@ class JoueurTest {
     @Test
     void joue() {
         j.joue();
-        verify(connexionVersMoteur, times(1)).transfereMessage(DEMANDER_AU_SERVEUR_DE_LANCER_LES_DÉS);
+        verify(connexionVersMoteur, times(1)).transfereMessage(DEMANDER_AU_SERVEUR_DE_LANCER_LES_DÉS, j.getIdentité());
     }
+
 }

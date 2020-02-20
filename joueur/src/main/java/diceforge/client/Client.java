@@ -35,12 +35,13 @@ public class Client implements Emitter.Listener {
 
     public final static void main(String [] args) throws URISyntaxException {
 
-
+        String nom ="client à distance";
+        if (args.length >= 1) nom = args[0];
         Socket mSocket = IO.socket("http://127.0.0.1:10101");
         //"http://192.168.1.23:10101";
 
 
-        Joueur j = new Joueur("client à distance");
+        Joueur j = new Joueur(nom);
 
         Client c = new Client(mSocket, j);
 
@@ -52,6 +53,7 @@ public class Client implements Emitter.Listener {
 
     @Override
     public void call(Object... objects) {
+        System.out.println(joueur.getIdentité()+" > on me demande de jouer");
         joueur.joue();
     }
 
@@ -78,11 +80,13 @@ public class Client implements Emitter.Listener {
 
     public void terminer() {
 
+
         // pour ne pas être sur le thread de SocketIO
         new Thread(new Runnable() {
 
             @Override
             public void run() {
+                mSocket.off(DEMANDER_AU_JOUEUR_DE_JOUER);
                 mSocket.off("disconnect");
                 mSocket.close();
                 System.out.println("@todo >>>> c'est fini");

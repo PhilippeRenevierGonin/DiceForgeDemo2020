@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>PhilippeRG</groupId> <!-- à changer par le nom du groupe -->
-    <artifactId>DiceForge</artifactId> <!-- et le nom du projet -->
+    <artifactId>DiceForgeGame</artifactId> <!-- et le nom du projet -->
     <version>1.0</version>
 
 	<modules>
@@ -16,7 +16,7 @@
 	</modules>
 	
 	<packaging>pom</packaging>
-	
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> <!-- éventuellement à changer : encodage de vos fichiers -->
         <compiler.source>11</compiler.source> <!-- éventuellement à changer : version de java (sdk) utilisée pour le développement -->

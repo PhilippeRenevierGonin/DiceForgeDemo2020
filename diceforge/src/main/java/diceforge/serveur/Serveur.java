@@ -4,22 +4,34 @@ import com.corundumstudio.socketio.AckRequest;
 import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
-import com.corundumstudio.socketio.listener.ConnectListener;
 import com.corundumstudio.socketio.listener.DataListener;
 import diceforge.joueur.Identité;
 import diceforge.moteur.GestionnaireDeTour;
 
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import static diceforge.echange.Protocole.*;
 
-public class Serveur implements /* ConnectListener, */ DataListener<String> {
+public class Serveur implements /* ConnectListener, */ DataListener<Identité> {
 
+    class CoupleIdClient {
+        Identité id;
+        SocketIOClient client;
+
+        CoupleIdClient(Identité id, SocketIOClient client){
+            this.id = id;
+            this.client = client;
+        }
+
+    }
 
     private final GestionnaireDeTour moteur;
-    private SocketIOClient monClient;
+    private ArrayList<CoupleIdClient> mesClients = new ArrayList<>();
     SocketIOServer server;
 
     public Serveur(Configuration config, GestionnaireDeTour moteur) {
@@ -35,22 +47,23 @@ public class Serveur implements /* ConnectListener, */ DataListener<String> {
         server.addEventListener(IDENTIFICATION, Identité.class, new DataListener<Identité>() {
             @Override
             public void onData(SocketIOClient socketIOClient, Identité nom, AckRequest ackRequest) throws Exception {
+                System.out.println("NEW PLAYER "+nom);
                 receptionNouveauJoueur(socketIOClient, nom);
             }
         });
 
-        server.addEventListener(DEMANDER_AU_SERVEUR_DE_LANCER_LES_DÉS, String.class, this);
+        server.addEventListener(DEMANDER_AU_SERVEUR_DE_LANCER_LES_DÉS, Identité.class, this);
 
 
         server.start(); // démarre un thread… le programme ne s’arrêtera pas tant que le serveur n’est pas terminé
 
     }
 
-    protected void receptionNouveauJoueur(SocketIOClient socketIOClient, Identité id) {
-        monClient = socketIOClient;
+    protected synchronized void receptionNouveauJoueur(SocketIOClient socketIOClient, Identité id) {
+        System.out.println("receptionNouveauJoueur "+id);
+        mesClients.add(new CoupleIdClient(id, socketIOClient));
         // System.out.println(monClient.getRemoteAddress());
-        moteur.ajouterJoueur(id); //@todo, recevoir le nom
-        moteur.jouer();
+        moteur.ajouterJoueur(id);
     }
 
 
@@ -80,21 +93,41 @@ public class Serveur implements /* ConnectListener, */ DataListener<String> {
     public void onConnect(SocketIOClient socketIOClient) {
         monClient = socketIOClient;
         // System.out.println(monClient.getRemoteAddress());
-        moteur.ajouterJoueur(new Identité("nomTemp")); //@todo, recevoir le nom
+        moteur.ajouterJoueur(new Identité("nomTemp"));
         moteur.jouer();
     }
     */
-    public void transfereDemandeDeJouer() {
-        monClient.sendEvent(DEMANDER_AU_JOUEUR_DE_JOUER);
+    public void  transfereDemandeDeJouer(Identité id) {
+        System.out.println("transfereDemandeDeJouer taille client = "+ mesClients.size()+ " id = "+id+ " / "+ mesClients.get(retrouverJoueur(id)).id);
+        System.out.println("transfereDemandeDeJouer sendEvent ");
+        mesClients.get(retrouverJoueur(id)).client.sendEvent(DEMANDER_AU_JOUEUR_DE_JOUER);
+    }
+
+    int retrouverJoueur(Identité id) {
+        int res = -1;
+        for(int i = 0; i < mesClients.size(); i++) {
+            CoupleIdClient couple = mesClients.get(i);
+            if (couple.id.equals(id)) {
+
+                res = i;
+                break;
+            }
+        }
+
+        return res;
     }
 
     @Override
-    public void onData(SocketIOClient socketIOClient, String s, AckRequest ackRequest) throws Exception {
-        moteur.lanceMesDés();
+    public synchronized void onData(SocketIOClient socketIOClient, Identité id, AckRequest ackRequest) throws Exception {
+        // @todo à déplacer dans GestionnaireDeTour car ici cela suppose que les id ont été ajouté dans le même ordre
+        int i = retrouverJoueur(id);
+        System.out.println("c'est le joueur "+i+" id = "+id);
+        moteur.lanceMesDés(i);
     }
 
     public void terminer() {
-        monClient.disconnect();
+        for(CoupleIdClient c : mesClients) c.client.disconnect();
+
         new Thread(new Runnable() {
             @Override
             public void run() {

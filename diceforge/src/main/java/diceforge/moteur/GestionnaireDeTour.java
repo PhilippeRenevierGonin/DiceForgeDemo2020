@@ -3,47 +3,75 @@ package diceforge.moteur;
 import diceforge.joueur.Identité;
 import diceforge.serveur.Serveur;
 
+import java.util.ArrayList;
 import java.util.Random;
 
+import static diceforge.echange.Protocole.NB_JOUEURS;
+
 public class GestionnaireDeTour {
-    private Identité joueur;
-    private Inventaire inventaire;
+    private ArrayList<Identité> joueurs = new ArrayList();
+    private ArrayList<Inventaire> inventaires= new ArrayList();
     private Random rand;
     private Serveur serveur;
+
+    int nbJoueursAyantJouéCeTour = 0;
 
     public GestionnaireDeTour(Random rand) {
         this.rand = rand;
     }
 
+    public synchronized void  jouerUnTour() {
+        System.out.println("nb j = "+joueurs.size() );
+        nbJoueursAyantJouéCeTour = 0;
+        if ((joueurs.size() == NB_JOUEURS) && (inventaires.size() == NB_JOUEURS)) {
+            System.out.println(" j 0 = "+joueurs.get(0));
+            serveur.transfereDemandeDeJouer(joueurs.get(0));
+            System.out.println(" j 1 = "+joueurs.get(1));
 
-    public void jouer() {
-        if ((joueur != null) && (inventaire != null)) {
-            serveur.transfereDemandeDeJouer();
+            serveur.transfereDemandeDeJouer(joueurs.get(1));
         }
 
     }
 
     private void déterminerGagnant() {
-        System.out.println(joueur.getNom()+" gagne");
+        if (inventaires.get(0).getPoints() > inventaires.get(1).getPoints())
+
+            System.out.println(joueurs.get(0).getNom()+" gagne");
+        else
+            System.out.println(joueurs.get(1).getNom()+" gagne");
     }
 
     private void afficherScore() {
-        System.out.println(joueur.getNom() +" a "+inventaire.getPoints()+" points ");
+        for(int i  = 0; i < NB_JOUEURS; i++)
+        System.out.println(joueurs.get(i).getNom() +" a "+inventaires.get(i).getPoints()+" points ");
     }
 
-    public void ajouterJoueur(Identité joueurIdentité) {
-        this.joueur = joueurIdentité;
-        this.inventaire = new Inventaire(this.rand);
+    public synchronized void ajouterJoueur(Identité joueurIdentité) {
+        System.out.println("ajouterJoueur" + joueurIdentité);
+        if (joueurs.size() < NB_JOUEURS)
+        {
+            this.joueurs.add(joueurIdentité);
+            this.inventaires.add(new Inventaire(this.rand));
+
+        }
+        if (joueurs.size() == NB_JOUEURS) jouerUnTour();
     }
 
     /**
      * lance les dés pour le joueur, comptabilise ses points ainsi gagné et les affiche
      */
-    public void lanceMesDés() {
-        int points = inventaire.lancerDés();
-        inventaire.ajouterPoints(points);
-        System.out.println(joueur.getNom()+" lance les dés et obtient "+points+" points");
+    public synchronized void lanceMesDés(int i) {
+        int points = inventaires.get(i).lancerDés();
+        inventaires.get(i).ajouterPoints(points);
+        System.out.println(joueurs.get(i).getNom()+" lance les dés et obtient "+points+" points");
+        nbJoueursAyantJouéCeTour++;
 
+        if(nbJoueursAyantJouéCeTour == NB_JOUEURS) finirTour();
+
+    }
+
+
+    public synchronized void finirTour() {
         // déplacer ici car asynchrone
         afficherScore();
         déterminerGagnant();

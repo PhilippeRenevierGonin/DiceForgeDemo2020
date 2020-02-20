@@ -18,7 +18,7 @@ public class Joueur {
 
 
     public void joue() {
-        client.transfereMessage(DEMANDER_AU_SERVEUR_DE_LANCER_LES_DÉS);
+        client.transfereMessage(DEMANDER_AU_SERVEUR_DE_LANCER_LES_DÉS, identité);
     }
 
     public void setIdentité(Identité identité) {
