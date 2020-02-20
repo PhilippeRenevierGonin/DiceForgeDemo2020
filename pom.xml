@@ -12,6 +12,7 @@
 		<module>commun</module>
 		<module>diceforge</module>
         <module>joueur</module>
+        <module>lanceur</module>
 	</modules>
 	
 	<packaging>pom</packaging>
