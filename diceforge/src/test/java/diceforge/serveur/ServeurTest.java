@@ -19,11 +19,14 @@ import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class ServeurTest {
-    /*
+
         // @TODO TEST
 
     @Mock
-    SocketIOClient client;
+    SocketIOClient client1;
+
+    @Mock
+    SocketIOClient client2;
 
     @Mock
     Random rand;
@@ -48,13 +51,16 @@ class ServeurTest {
 
     @Test
     void receptionNouveauJoueur() {
-        Identité id = new Identité();
+        Identité id1 = new Identité("test 1");
+        Identité id2 = new Identité("autre id");
 
-        serveur.receptionNouveauJoueur(client, id);
+        serveur.receptionNouveauJoueur(client1, id1);
+        serveur.receptionNouveauJoueur(client2, id2);
 
         // on pourrait vérifier "monClient" dans Serveur et identité dans GestionnaireDeTour (nécessite getter)
-        verify(client,times(1)).sendEvent(DEMANDER_AU_JOUEUR_DE_JOUER);
+        verify(client1,times(1)).sendEvent(DEMANDER_AU_JOUEUR_DE_JOUER);
+        verify(client2,times(1)).sendEvent(DEMANDER_AU_JOUEUR_DE_JOUER);
     }
 
-    */
+
 }
