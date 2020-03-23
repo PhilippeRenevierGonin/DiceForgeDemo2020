@@ -36,7 +36,7 @@ class ServeurTest {
 
     @BeforeEach
     void setUp() {
-        //         on crée un vrai "serveur" qui ne sera pas utilisé, il faudrait réorganiser le code pour simplifier le test
+        //   on crée un vrai "serveur" qui ne sera pas utilisé, il faudrait réorganiser le code pour simplifier le test
         Configuration config = new Configuration();
         config.setHostname("127.0.0.1");
         config.setPort(10101);
