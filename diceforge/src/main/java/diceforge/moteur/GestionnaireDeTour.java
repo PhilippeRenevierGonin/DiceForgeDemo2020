@@ -71,6 +71,7 @@ public class GestionnaireDeTour {
     }
 
 
+
     public synchronized void finirTour() {
         // déplacer ici car asynchrone
         afficherScore();
@@ -82,6 +83,10 @@ public class GestionnaireDeTour {
     }
 
 
+    /**
+     * Modificateur du serveur réseau (pour communiquer avec les joueurs-clients).
+     * @param serveur l'élément gérant le réseau
+     */
     public void setServeur(Serveur serveur) {
         this.serveur = serveur;
     }

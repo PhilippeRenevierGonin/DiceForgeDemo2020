@@ -63,6 +63,8 @@ public class Serveur implements /* ConnectListener, */ DataListener<Identité> {
         System.out.println("receptionNouveauJoueur "+id);
         mesClients.add(new CoupleIdClient(id, socketIOClient));
         // System.out.println(monClient.getRemoteAddress());
+        // pour exemple javadoc : moteur.setServeur(this);
+        // la ligne avait été écrasée lors de l'exemple de javadoc
         moteur.ajouterJoueur(id);
     }
 

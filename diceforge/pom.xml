@@ -24,11 +24,7 @@
             <!-- pour que maven lance les tests junit 5 -->
 
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.2</version>
-            </plugin>
+
 
 
             <!-- la génération de la  javadoc s'utilise avec "mvn site" -->
@@ -39,7 +35,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>1.6.0</version> <!-- à ne pas changer : c'est la version du plugin (et pas de java) -->
+                <version>3.0.0</version> <!-- à ne pas changer : c'est la version du plugin (et pas de java) -->
                 <executions>
                     <execution>
                         <goals>
