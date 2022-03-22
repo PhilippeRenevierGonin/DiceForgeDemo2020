@@ -1,6 +1,7 @@
 package diceforge.moteur;
 
-import java.util.Random;
+
+import diceforge.random.Random;
 
 public class Inventaire {
 

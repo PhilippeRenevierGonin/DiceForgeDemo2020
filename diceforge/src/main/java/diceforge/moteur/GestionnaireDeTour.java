@@ -1,10 +1,10 @@
 package diceforge.moteur;
 
 import diceforge.joueur.Identité;
+import diceforge.random.Random;
 import diceforge.serveur.Serveur;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import static diceforge.echange.Protocole.NB_JOUEURS;
 

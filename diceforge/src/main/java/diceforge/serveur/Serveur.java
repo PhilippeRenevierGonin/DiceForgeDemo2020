@@ -7,13 +7,12 @@ import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.DataListener;
 import diceforge.joueur.Identité;
 import diceforge.moteur.GestionnaireDeTour;
+import diceforge.random.Random;
 
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+
 
 import static diceforge.echange.Protocole.*;
 

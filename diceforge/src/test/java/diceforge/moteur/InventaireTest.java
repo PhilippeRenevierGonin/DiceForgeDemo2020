@@ -1,15 +1,14 @@
 package diceforge.moteur;
 
+import diceforge.random.Random;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,14 +24,14 @@ class InventaireTest {
 
     @Test
     void lancerDés() {
-        when(rand.nextInt(anyInt())).thenReturn(1, 1,2, 3, 0,4, 1, 2);
+        when(rand.faceAleatoire()).thenReturn(2, 2,3, 4, 1,5, 2, 3);
         for(int i = 0; i < 8; i++) assertEquals(2, inventaire.lancerDés());
     }
 
 
     @Test
     void lancerDésSurLaFace3pts() {
-        when(rand.nextInt(anyInt())).thenReturn(5);
+        when(rand.faceAleatoire()).thenReturn(6);
         for(int i = 0; i < 8; i++) assertEquals(3, inventaire.lancerDés());
     }
 
