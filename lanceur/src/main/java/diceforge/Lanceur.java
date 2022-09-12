@@ -6,6 +6,8 @@ import diceforge.serveur.Serveur;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 
 public class Lanceur implements  Runnable {
@@ -18,15 +20,23 @@ public class Lanceur implements  Runnable {
     }
 
     public final static void main(String [] args) {
+        try {
+            System.setOut(new PrintStream(System.out, true, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
-        //  la façon de lancer... forcer à une nouvelle socket, sinon c'était la même socket pour les deux clients
-        //  la façon de lancer... forcer à une nouvelle socket, sinon c'était la même socket pour les deux clients
+        String nomJoeur1 = "J1";
+        String nomJoeur2 = "J2";
+
+        if (args.length >= 1) nomJoeur1 = args[0];
+        if (args.length >= 2) nomJoeur2 = args[1];
 
 
-        Thread joueur1 = new Thread(new Lanceur("J1"));
+        Thread joueur1 = new Thread(new Lanceur(nomJoeur1));
 
 
-        Thread joueur2 = new Thread(new Lanceur("J2"));
+        Thread joueur2 = new Thread(new Lanceur(nomJoeur2));
 
 
 

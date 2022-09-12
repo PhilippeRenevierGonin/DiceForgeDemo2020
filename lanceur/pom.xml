@@ -30,9 +30,31 @@
                 <version>3.0.0</version> <!-- à ne pas changer : c'est la version du plugin (et pas de java) -->
                 <executions>
                     <execution>
+                        <id>michelvsphil</id>
                         <goals>
                             <goal>java</goal>
                         </goals>
+                        <configuration>
+                            <mainClass>diceforge.Lanceur</mainClass>  <!-- à changer : classe avec point d'entrée pour votre projet -->
+                            <arguments>
+                                <argument>Michel</argument>
+                                <argument>Phil</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>michelvsgilles</id>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>diceforge.Lanceur</mainClass>  <!-- à changer : classe avec point d'entrée pour votre projet -->
+                            <arguments>
+                                <argument>Michel</argument>
+                                <argument>Gilles</argument>
+                            </arguments>
+                        </configuration>
                     </execution>
                 </executions>
                 <configuration>
