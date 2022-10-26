@@ -18,7 +18,7 @@ class ClientTest {
     @Mock
     Socket mockDeSocket;
 
-    Client objetTesté;
+    ClientSocketIO objetTesté;
     Joueur joueur;
     Joueur spyDuJoueur;
 
@@ -27,7 +27,7 @@ class ClientTest {
         InOrder ordre = inOrder(mockDeSocket);
         joueur = new Joueur("joueur test");
         spyDuJoueur = spy(joueur);
-        objetTesté=new Client(mockDeSocket, spyDuJoueur);
+        objetTesté=new ClientSocketIO(mockDeSocket, spyDuJoueur);
 
         ordre.verify(mockDeSocket, times(1)).on(DEMANDER_AU_JOUEUR_DE_JOUER, objetTesté);
         ordre.verify(mockDeSocket, times(1)).on(eq("disconnect"), any());

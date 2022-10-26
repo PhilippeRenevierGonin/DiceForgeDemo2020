@@ -1,6 +1,7 @@
 package diceforge.joueur;
 
 import diceforge.client.Client;
+import diceforge.client.ClientSocketIO;
 
 import static diceforge.echange.Protocole.DEMANDER_AU_SERVEUR_DE_LANCER_LES_DÉS;
 import static diceforge.echange.Protocole.IDENTIFICATION;

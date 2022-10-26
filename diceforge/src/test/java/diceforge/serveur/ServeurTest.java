@@ -33,7 +33,7 @@ class ServeurTest {
     Random rand;
 
     GestionnaireDeTour moteur;
-    Serveur serveur;
+    ServeurSocketIO serveur;
 
     @BeforeEach
     void setUp() {
@@ -44,7 +44,7 @@ class ServeurTest {
 
         moteur = new GestionnaireDeTour(rand);
 
-        serveur = new Serveur(config, moteur);
+        serveur = new ServeurSocketIO(config, moteur);
 
         moteur.setServeur(serveur);
 

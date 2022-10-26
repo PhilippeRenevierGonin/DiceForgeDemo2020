@@ -1,10 +1,12 @@
 package diceforge;
 
-import diceforge.client.Client;
+import diceforge.client.ClientSocketIO;
 import diceforge.joueur.Joueur;
-import diceforge.serveur.Serveur;
+import diceforge.serveur.ServeurSocketIO;
 import io.socket.client.IO;
 import io.socket.client.Socket;
+import io.socket.engineio.client.transports.Polling;
+import io.socket.engineio.client.transports.WebSocket;
 
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
@@ -44,7 +46,7 @@ public class Lanceur implements  Runnable {
             @Override
             public void run() {
                 String [] argsServeur = {};
-                Serveur.main(argsServeur);
+                ServeurSocketIO.main(argsServeur);
             }
         });
 
@@ -54,6 +56,7 @@ public class Lanceur implements  Runnable {
 
     }
 
+
     @Override
     public void run() {
         Socket mSocket = null;
@@ -61,6 +64,9 @@ public class Lanceur implements  Runnable {
             // @todo : il crée la même socket.. il faut une option... dans le lanceur
             IO.Options options = new IO.Options();
             options.forceNew = true;
+            options.transports = new String[] {Polling.NAME, WebSocket.NAME };
+            System.out.println("transports par defaut "+options.transports);
+            // client v2... IO.Options options = IO.Options.builder().setForceNew(true).setTransports(new String[] { WebSocket.NAME }).setHostname("127.0.0.1").build();
             mSocket = IO.socket("http://127.0.0.1:10101", options);
             System.out.println(mSocket);
         } catch (URISyntaxException e) {
@@ -71,7 +77,7 @@ public class Lanceur implements  Runnable {
 
         Joueur j = new Joueur(this.j);
 
-        Client c = new Client(mSocket, j);
+        ClientSocketIO c = new ClientSocketIO(mSocket, j);
 
         j.setClient(c);
     }

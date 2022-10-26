@@ -1,6 +1,6 @@
 package diceforge.joueur;
 
-import diceforge.client.Client;
+import diceforge.client.ClientSocketIO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,7 +16,7 @@ class JoueurTest {
 
 
     @Mock
-    Client connexionVersMoteur;
+    ClientSocketIO connexionVersMoteur;
 
     Joueur j;
 

@@ -67,7 +67,6 @@ public class GestionnaireDeTour {
         nbJoueursAyantJouéCeTour++;
 
         if(nbJoueursAyantJouéCeTour == NB_JOUEURS) finirTour();
-
     }
 
 

@@ -2,6 +2,7 @@ package diceforge.echange;
 
 public class Protocole {
 
+
     public static final String  IDENTIFICATION = "identification";
     public static final String  DEMANDER_AU_SERVEUR_DE_LANCER_LES_DÉS = "jouer";
 
