@@ -31,9 +31,28 @@
                 <version>3.1.0</version> <!-- à ne pas changer : c'est la version du plugin (et pas de java) -->
                 <executions>
                     <execution>
+                        <id>wsMichel</id>
                         <goals>
                             <goal>java</goal>
                         </goals>
+                        <configuration>
+                            <mainClass>diceforge.client.ClientWebSocket</mainClass>
+                            <arguments>
+                                <argument>Michel</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>wsStephane</id>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>diceforge.client.ClientWebSocket</mainClass>
+                            <arguments>
+                                <argument>Stephane</argument>
+                            </arguments>
+                        </configuration>
                     </execution>
                 </executions>
                 <configuration>

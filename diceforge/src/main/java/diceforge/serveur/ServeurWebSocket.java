@@ -168,6 +168,7 @@ public class ServeurWebSocket extends WebSocketServer implements Serveur {
         for(InetAddress i : ia) System.out.println(i); */
 
         // ServeurWebSocket serveur = new ServeurWebSocket(ia[0], 10101, moteur);
+        System.out.println(InetAddress.getLocalHost());
         ServeurWebSocket serveur = new ServeurWebSocket(InetAddress.getLocalHost(), 10101, moteur);
         moteur.setServeur(serveur);
 

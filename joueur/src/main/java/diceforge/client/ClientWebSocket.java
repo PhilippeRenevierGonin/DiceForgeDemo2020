@@ -24,7 +24,7 @@ public class ClientWebSocket implements Client {
 
         Joueur j = new Joueur(nom);
         // @todo adresse écrite en dur
-        Client client = new ClientWebSocket("ws://134.59.20.194:10101", j);
+        Client client = new ClientWebSocket("ws://192.168.1.19:10101", j);
 
     }
 
